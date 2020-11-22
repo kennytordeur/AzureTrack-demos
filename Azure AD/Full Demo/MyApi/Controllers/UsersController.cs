@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.Resource;
 
 namespace MyApi.Controllers
 {
@@ -16,10 +15,6 @@ namespace MyApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-
-        static readonly string[] scopeRequiredByApiForReadData = new string[] { "users.read" };
-
-
         private readonly ITokenAcquisition _tokenAcquisition;
 
         public UsersController(ITokenAcquisition tokenAcquisition)
@@ -30,9 +25,7 @@ namespace MyApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<UserModel>> Get()
         {
-            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApiForReadData);
-
-
+            //we want an access token for the User.ReadBasic.All scope for the MS Graph API
             var token = await _tokenAcquisition.GetAccessTokenForUserAsync(new string[] { "User.ReadBasic.All" });
 
             var graphServiceClient = new GraphServiceClient(
