@@ -17,7 +17,7 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
             redirectUrl: window.location.origin,
             postLogoutRedirectUri: window.location.origin,
             clientId: 'ed472c40-c3f0-46ec-b048-a855b8dbe423',
-            scope: 'openid profile api://9086f4ba-4b17-4e38-b372-f83bab6d5636/data.read api://9086f4ba-4b17-4e38-b372-f83bab6d5636/users.read',
+            scope: 'openid api://9086f4ba-4b17-4e38-b372-f83bab6d5636/data.read',
             responseType: 'code',
             silentRenew: true,
             maxIdTokenIatOffsetAllowedInSeconds: 600,
