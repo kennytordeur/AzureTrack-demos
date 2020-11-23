@@ -25,11 +25,18 @@ namespace MyWebApp.Controllers
         }
 
         public async Task<IActionResult> Data()
-        { 
+        {
             return View(new DataViewModel
             {
                 Data = await _apiService.GetApiDataAsync()
             });
+        }
+
+        public async Task<IActionResult> DataPost()
+        {
+            var isOk = await _apiService.PostApiDataAsync();
+
+            return View(isOk);
         }
 
         public async Task<IActionResult> Users()

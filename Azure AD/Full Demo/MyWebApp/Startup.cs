@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,13 +29,14 @@ namespace MyWebApp
             services.AddHttpClient();
             services.AddTransient<ApiService>();
             services.AddOptions();
-
+             
             //Add Authentication form WebApp
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                    .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
+            services.AddMicrosoftIdentityWebAppAuthentication(Configuration, "AzureAd")
                     //Add support for token acquisition for downstream api -> delegated access
                     .EnableTokenAcquisitionToCallDownstreamApi(Configuration.GetSection("Api:ScopesForAccessToken").Get<string[]>())
                     .AddInMemoryTokenCaches();
+
+
 
             services.AddControllersWithViews(options =>
             {
