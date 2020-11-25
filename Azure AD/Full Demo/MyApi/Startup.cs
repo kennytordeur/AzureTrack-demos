@@ -85,20 +85,20 @@ namespace MyApi
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows()
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        AuthorizationCode = new OpenApiOAuthFlow
                         {
                             AuthorizationUrl = new Uri(swaggerAzureAdB2COptions.AuthorizationUrl),
                             TokenUrl = new Uri(swaggerAzureAdB2COptions.TokenUrl),
                             Scopes = swaggerAzureAdB2COptions.Scopes.ToDictionary(i => i.Value, i => i.Key)
                         }
-                        //Authorization Code flow also supported with secret
-                        //,
-                        //AuthorizationCode = new OpenApiOAuthFlow
+
+                        //Implicit flow is also supported
+                        //Implicit = new OpenApiOAuthFlow
                         //{
                         //    AuthorizationUrl = new Uri(swaggerAzureAdB2COptions.AuthorizationUrl),
                         //    TokenUrl = new Uri(swaggerAzureAdB2COptions.TokenUrl),
                         //    Scopes = swaggerAzureAdB2COptions.Scopes.ToDictionary(i => i.Value, i => i.Key)
-                        //}
+                        //} 
                     }
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>(); 
@@ -144,8 +144,8 @@ namespace MyApi
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyApi");
                 options.OAuthClientId(swaggerConfig.Value.ClientId);
 
-                //needed for Authorzation Code Flow
-                //options.OAuthClientSecret("mysecret");
+                //not needed for implicit flow
+                options.OAuthUsePkce();
             });
         }
     }
