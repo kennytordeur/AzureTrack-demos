@@ -1,4 +1,6 @@
 
+using System.IdentityModel.Tokens.Jwt;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +27,11 @@ namespace MyWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //JwtSecurityTokenHandler used by JwtBearer & OIDC maps the standard OIDC claim types to long namespace names to match older protocols like WsFed. 
+            //We can't disable this by default without affecting existing users.          
+            //Turning this off manually requires either calling JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             //configure client for service
             services.AddHttpClient();
             services.AddTransient<ApiService>();
