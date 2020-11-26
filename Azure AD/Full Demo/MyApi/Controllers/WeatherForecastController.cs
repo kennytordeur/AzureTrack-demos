@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 
+using MyApi.Models;
+
 namespace MyApi.Controllers
 {
     [Authorize]
@@ -26,12 +28,12 @@ namespace MyApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecastModel> Get()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(ScopesRequiredByApiForReadData);
 
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecastModel
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
@@ -41,7 +43,7 @@ namespace MyApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] WeatherForecast weatherForecast)
+        public IActionResult Post([FromBody] WeatherForecastModel weatherForecast)
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(ScopesRequiredByApiForWriteData);
 

@@ -1,8 +1,8 @@
 using System;
 
-namespace MyApi
+namespace MyApi.Models
 {
-    public class WeatherForecast
+    public class WeatherForecastModel
     {
         public DateTime Date { get; set; }
 
